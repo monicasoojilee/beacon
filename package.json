@@ -4,11 +4,12 @@
   "description": "Simple and lightweight Boilerplate for ReactJS projects",
   "scripts": {
     "lint": "eslint --ext .jsx,.js src",
-    "start": "node server.js"
+    "start": "node server.js",
+    "node-sass": "node-sass --omit-source-map-url sass/mystyles.scss css/mystyles.css"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/noahlotzer/react-simple-boilerplate.git"
+    "url": "git+ssh://git@github.com/monicasoojilee/react-boilerplate.git"
   },
   "keywords": [
     "react",
@@ -47,5 +48,6 @@
   "dependencies": {
     "react": "15.4.2",
     "react-dom": "15.4.2"
-  }
+  },
+  "main": "server.js"
 }
