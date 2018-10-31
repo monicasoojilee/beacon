@@ -35,17 +35,13 @@ class App extends Component {
     const socketServerURL = "ws://localhost:3001"
     this.socket = new WebSocket(socketServerURL);
   }
-  
+
   updateMessages(newMessage){
-      const messageBody = { 
-        // id: this.state.messages.length + 1,
-        // type: "incomingMessage",
+      const messageBody = {
         content: newMessage,
         username: this.state.currentUser
       }
       this.socket.send(JSON.stringify(messageBody));
-      // const newMessageData = this.state.messages.concat(messageBody)
-      // this.setState({messages: newMessageData});
     }
 
 
@@ -61,8 +57,10 @@ class App extends Component {
       console.log("Connected to Server");
     };
 
-    this.socket.onmessage = () => {
-      console.log(event.data);
+    this.socket.onmessage = (event) => {
+      const messageWithId = JSON.parse(event.data);
+      const messages = this.state.messages.concat(messageWithId)
+      this.setState({messages: messages});
     }
   }
   
