@@ -14,7 +14,7 @@ function NavBar(props){
   return (
   <nav className="navbar">
   <a href="/" className="navbar-brand">Chatty</a>
-  <label>Number of Users:{props.numOfUsers}</label>
+  <label>Number of Users: {props.numOfUsers}</label>
   </nav>
   );
 }
@@ -73,12 +73,8 @@ class App extends Component {
     // RESPONSE: client <--- server
     this.socket.onmessage = (event) => {
       const serverData = JSON.parse(event.data);
-      console.log("serverData -onmessage: ", serverData);
       if (serverData.type === "numOfUsers") {
-        const usersOnline = serverData.totalNum;
-        console.log("PREV numOfUsers state: ", this.state.numOfUsers);
-        this.setState({numOfUsers: usersOnline});
-        console.log("UPDATE numOfUsers state", this.state.numOfUsers);
+        this.setState({numOfUsers: serverData.totalNum});
       } else {
         const messages = this.state.messages.concat(serverData);
         this.setState({messages: messages});

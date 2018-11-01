@@ -91,4 +91,9 @@ body {
   text-decoration: none;
 }
 
+label {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+}
 /*# sourceMappingURL=home.css.map */

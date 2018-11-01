@@ -6,12 +6,12 @@ class Message extends Component {
           <main className="messages" >
           { this.props.type === "incomingMessage" ? 
             <div className="message">
-                <span className="message-username">{ this.props.username }</span>
-                <span className="message-content">{ this.props.content }</span>
+                <span className="message-username">{this.props.username}</span>
+                <span className="message-content">{this.props.content}</span>
             </div>
              : 
              <div className="message system">
-                { this.props.content }
+                {this.props.content}
             </div>
           }
           </main>
