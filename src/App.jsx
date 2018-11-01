@@ -3,9 +3,6 @@ import ChatBar from './ChatBar.jsx';
 import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 
-// in-memory user and message data object
-import MessageData from './MessageData.json'
-
 // display loading message during delay simulation on initial render
 function Loading(){
   return (
@@ -27,17 +24,29 @@ class App extends Component {
     this.state = { 
       loading: true, 
       messages: [],
-      currentUser: {name: "Bob"}
+      currentUser: {name: "Anonymous"}
     }
     this.updateMessages = this.updateMessages.bind(this);
+    this.updateUsername = this.updateUsername.bind(this);
 
     // websocket setup and connection
     const socketServerURL = "ws://localhost:3001"
     this.socket = new WebSocket(socketServerURL);
   }
 
+  updateUsername(newUsername){
+    const usernameBody = {
+      type: "notifyMessage",
+      content: `${this.state.currentUser.name} changed their name to ${newUsername}`,
+      currentUser: {name: newUsername}
+    }
+    this.setState({currentUser: {name: newUsername}})
+    this.socket.send(JSON.stringify(usernameBody))
+  }
+
   updateMessages(newMessage){
       const messageBody = {
+        type: "postMessage",
         content: newMessage,
         username: this.state.currentUser
       }
@@ -58,8 +67,9 @@ class App extends Component {
     };
 
     this.socket.onmessage = (event) => {
-      const messageWithId = JSON.parse(event.data);
-      const messages = this.state.messages.concat(messageWithId)
+      const serverData = JSON.parse(event.data);
+      console.log(serverData);
+      const messages = this.state.messages.concat(serverData)
       this.setState({messages: messages});
     }
   }
@@ -71,6 +81,7 @@ class App extends Component {
           <div>
           <NavBar />
           <ChatBar currentUser={this.state.currentUser} 
+                   updateUsername={this.updateUsername}
                    updateMessages={this.updateMessages} />
           <Message />
           <MessageList messageList={this.state.messages}/>
