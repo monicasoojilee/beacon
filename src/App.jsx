@@ -10,10 +10,11 @@ function Loading(){
   );
 }
 
-function NavBar(){
+function NavBar(props){
   return (
   <nav className="navbar">
   <a href="/" className="navbar-brand">Chatty</a>
+  <label>Number of Users:{props.numOfUsers}</label>
   </nav>
   );
 }
@@ -24,7 +25,8 @@ class App extends Component {
     this.state = { 
       loading: true, 
       messages: [],
-      currentUser: {name: "Anonymous"}
+      currentUser: {name: "Anonymous"},
+      numOfUsers: 0
     }
     this.updateMessages = this.updateMessages.bind(this);
     this.updateUsername = this.updateUsername.bind(this);
@@ -34,6 +36,7 @@ class App extends Component {
     this.socket = new WebSocket(socketServerURL);
   }
 
+  // REQUEST (new username): client ---> server
   updateUsername(newUsername){
     const usernameBody = {
       type: "notifyMessage",
@@ -44,6 +47,7 @@ class App extends Component {
     this.socket.send(JSON.stringify(usernameBody))
   }
 
+  // REQUEST (new message): client ---> server
   updateMessages(newMessage){
       const messageBody = {
         type: "postMessage",
@@ -66,11 +70,19 @@ class App extends Component {
       console.log("Connected to Server");
     };
 
+    // RESPONSE: client <--- server
     this.socket.onmessage = (event) => {
       const serverData = JSON.parse(event.data);
-      console.log(serverData);
-      const messages = this.state.messages.concat(serverData)
-      this.setState({messages: messages});
+      console.log("serverData -onmessage: ", serverData);
+      if (serverData.type === "numOfUsers") {
+        const usersOnline = serverData.totalNum;
+        console.log("PREV numOfUsers state: ", this.state.numOfUsers);
+        this.setState({numOfUsers: usersOnline});
+        console.log("UPDATE numOfUsers state", this.state.numOfUsers);
+      } else {
+        const messages = this.state.messages.concat(serverData);
+        this.setState({messages: messages});
+      }
     }
   }
   
@@ -79,7 +91,7 @@ class App extends Component {
       <div>
         {this.state.loading ? <Loading /> :
           <div>
-          <NavBar />
+          <NavBar numOfUsers={this.state.numOfUsers}/>
           <ChatBar currentUser={this.state.currentUser} 
                    updateUsername={this.updateUsername}
                    updateMessages={this.updateMessages} />
