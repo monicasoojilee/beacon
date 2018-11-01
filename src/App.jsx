@@ -1,15 +1,17 @@
+// IMPORT - all components/features for the main application
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 
-// display loading message during delay simulation on initial render
+// RENDER - simulated delay loading message on initial render
 function Loading(){
   return (
     <h1>Loading Tasks...</h1>
   );
 }
 
+// RENDER - Navigation Bar
 function NavBar(props){
   return (
   <nav className="navbar">
@@ -19,6 +21,7 @@ function NavBar(props){
   );
 }
 
+// REACT.COMPONENT - responsible for the main application & WebSocket server communication
 class App extends Component {
   constructor() {
     super();
@@ -28,12 +31,13 @@ class App extends Component {
       currentUser: {name: "Anonymous"},
       numOfUsers: 0
     }
-    this.updateMessages = this.updateMessages.bind(this);
-    this.updateUsername = this.updateUsername.bind(this);
-
-    // websocket setup and connection
+    // websocket setup
     const socketServerURL = "ws://localhost:3001"
     this.socket = new WebSocket(socketServerURL);
+
+    // bind methods
+    this.updateMessages = this.updateMessages.bind(this);
+    this.updateUsername = this.updateUsername.bind(this);
   }
 
   // REQUEST (new username): client ---> server
@@ -57,15 +61,14 @@ class App extends Component {
       this.socket.send(JSON.stringify(messageBody));
     }
 
-
   componentDidMount() {
-    // simulate delay for initial app loading
+
+    // simulated delay on initial render
     setTimeout(() => {
-      this.setState(
-        {loading: false})
+      this.setState({loading: false})
       }, 1000);
 
-    // socket connection to web server
+    // websocket connection to server
     this.socket.onopen = () => {
       console.log("Connected to Server");
     };
@@ -73,11 +76,15 @@ class App extends Component {
     // RESPONSE: client <--- server
     this.socket.onmessage = (event) => {
       const serverData = JSON.parse(event.data);
-      if (serverData.type === "numOfUsers") {
-        this.setState({numOfUsers: serverData.totalNum});
-      } else {
-        const messages = this.state.messages.concat(serverData);
-        this.setState({messages: messages});
+      switch(serverData.type) {
+        
+        case "numOfUsers":
+          this.setState({numOfUsers: serverData.totalNum});
+        break;
+
+        default:
+          const messages = this.state.messages.concat(serverData);
+          this.setState({messages: messages});
       }
     }
   }

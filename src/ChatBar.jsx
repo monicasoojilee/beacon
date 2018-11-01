@@ -3,10 +3,12 @@ import React, {Component} from 'react';
 class ChatBar extends Component {
     constructor(){
         super();
+        // bind for event handler methods
         this.onNameEnter = this.onNameEnter.bind(this);
         this.onMessageEnter = this.onMessageEnter.bind(this);
     }
 
+    // Change to username input field (press 'ENTER' event handler)
     onNameEnter(event){
         if (event.keyCode === 13) {
             const newUsername = event.target.value;
@@ -14,6 +16,7 @@ class ChatBar extends Component {
         }
     }
 
+    // Change to message input field (press 'ENTER' event handler)
     onMessageEnter(event){
         if (event.keyCode === 13) {
             const newMessage = event.target.value;

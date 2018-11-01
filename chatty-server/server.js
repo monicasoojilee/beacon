@@ -1,22 +1,21 @@
+//--------------- MIDDLEWARE SETUP ---------------//
+const PORT = 3001;
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuidv4 = require('uuid/v4');
 
-// Set the port to 3001
-const PORT = 3001;
 
-// Create a new express server
+//--------------- EXPRESS SERVER ---------------//
 const server = express()
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
+   // Make the express server serve static assets (HTML, JS, CSS) from the /public folder
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
-// Create the WebSockets server
+
+//--------------- WEBSOCKET SERVER ---------------//
 const wss = new SocketServer({ server });
 
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
+// ON CONNECT (+ assigned a socket(ws))
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
@@ -28,9 +27,12 @@ wss.on('connection', (ws) => {
     client.send(JSON.stringify(usersOnline));
   });
 
+// ON MESSAGE
   ws.on('message', function incoming(event) {
     const clientData = JSON.parse(event);
+    
     switch(clientData.type) {
+    
       case "notifyMessage":
       const usernameWithId = {
         type: "incomingNotification",
@@ -38,7 +40,6 @@ wss.on('connection', (ws) => {
         username: clientData.currentUser.name,
         content: clientData.content
       }
-
       wss.clients.forEach(client => {
         client.send(JSON.stringify(usernameWithId));
       });
@@ -51,7 +52,6 @@ wss.on('connection', (ws) => {
         username: clientData.username.name,
         content: clientData.content,
       }
-    
       wss.clients.forEach(client => {
         client.send(JSON.stringify(messageWithId));
       });
@@ -59,7 +59,7 @@ wss.on('connection', (ws) => {
     }
   });
     
-    // Set up a callback for when a client closes the socket. This usually means they closed their browser.
+    // ON DISCONNECT
     ws.on('close', () => {
       console.log('Client disconnected');
       wss.clients.forEach(client => {

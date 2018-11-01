@@ -5,15 +5,15 @@ class MessageList extends Component {
   render() {
     const messages = this.props.messageList.map(message => {
       return <Message 
-        type={ message.type }
-        key={ message.id }
-        username={ message.username }
-        content={ message.content } />
+        type={message.type}
+        key={message.id}
+        username={message.username}
+        content={message.content} />
     });
 
     return (
       <main className="messages" >
-      { messages }
+      {messages}
       </main>
     );
   }
