@@ -1,45 +1,36 @@
-React Boilerplate
-=====================
+# Chatty Project
 
-A minimal and light dev environment for ReactJS.
+Chatty ("Beacon") is a single-page, real-time communication application, initialized with a [provided boilerplate](https://github.com/lighthouse-labs/react-simple-boilerplate) and focused primarily on the client-side experience, built with ReactJS and WebSockets.
 
-### Usage
+As a part of the web development curriculum at Lighthouse Labs (YVR), this was an individual evaluated project built over four days.
 
-Clone the boilerplate and create your own git repo.
+## Final Product
+![Loading Screen and Chat Interface](https://gyazo.com/67f6e05e99635f66b116371e68ec7124)
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+![Multiple Users](https://github.com/monicasoojilee/react-boilerplate/blob/master/styles/multiple-convos.png)
 
-Install the dependencies and start the server.
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
-
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
+### Getting Started
+1. Fork this repository, then clone your fork of this repository.
+2. Install dependencies using the npm install command.
+3. Start the main application (/src/App.jsx) using the npm run local command. It will be served at http://localhost:3000/.
+4. Start the socket server (/chatty-server/server.js) using the npm run local command. It will be served at http://localhost:3001/.
+5. Go to http://localhost:3000/ in your browser.
 
 ### Dependencies
-
-* React
-* Webpack
+* babel-core
 * [babel-loader](https://github.com/babel/babel-loader)
+* babel-preset-es2015
+* babel-preset-react
+* css-loader
+* express
+* node-sass
+* react
+* react-dom
+* sass-loader
+* sockjs-client
+* style-loader
+* uuid
+* webpack
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* ws

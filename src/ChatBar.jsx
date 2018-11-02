@@ -21,15 +21,15 @@ class ChatBar extends Component {
         if (event.keyCode === 13) {
             const newMessage = event.target.value;
             this.props.updateMessages(newMessage);
-            event.target.value = "";
+            event.target.value = '';
             }
     }
 
     render() {
         return (
-            <footer className="chatbar">
-                <input className="chatbar-username" placeholder={this.props.currentUser.name} onKeyUp={this.onNameEnter}/>
-                <input className="chatbar-message" placeholder="Type a message and hit 'ENTER'" onKeyUp={this.onMessageEnter}/>
+            <footer className='chatbar'>
+                <input className='chatbar-username' placeholder={this.props.currentUser.name} onKeyUp={this.onNameEnter}/>
+                <input className='chatbar-message' placeholder='Type a message and hit ENTER' onKeyUp={this.onMessageEnter}/>
             </footer>
         );
     }

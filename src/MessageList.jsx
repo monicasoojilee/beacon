@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Message from "./Message.jsx";
+import Message from './Message.jsx';
 
 class MessageList extends Component {
   render() {
@@ -13,7 +13,7 @@ class MessageList extends Component {
     });
 
     return (
-      <main className="messages" >
+      <main className='messages' >
       {messages}
       </main>
     );

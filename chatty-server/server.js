@@ -15,7 +15,7 @@ const server = express()
 //--------------- WEBSOCKET SERVER ---------------//
 const wss = new SocketServer({ server });
 
-const colourArr = ["#B71212", "#7B12B7", "#07729F", "#DE781E"];
+const colourArr = ["#483D8B", "#008080	", "#FF7F50", "#CD5C5C"];
 
 // ON CONNECT (+ assigned a socket(ws))
 wss.on('connection', (ws) => {
@@ -26,6 +26,7 @@ wss.on('connection', (ws) => {
   wss.clients.forEach(client => {
     let usersOnline = {
       type: "numOfUsers",
+      online: "logged in",
       totalNum: wss.clients.size
     }
     client.send(JSON.stringify(usersOnline));

@@ -6,15 +6,20 @@ import MessageList from './MessageList.jsx';
 // RENDER - simulated delay loading message on initial render
 function Loading(){
   return (
-    <h1>Loading Tasks...</h1>
+      <div>
+      <h1>Lighting the beacon</h1>
+      <img className='wood' src='../styles/wood.svg' />
+      <img className='torch' src='../styles/torch.svg' />
+      </div>
   );
 }
 
 // RENDER - Navigation Bar
 function NavBar(props){
   return (
-  <nav className="navbar">
-  <a href="/" className="navbar-brand">Chatty</a>
+  <nav className='navbar'>
+  <img src='../styles/lighthouse.svg' />
+  <a href='/' className='navbar-brand'>Beacon</a>
   <label>Number of Users: {props.numOfUsers}</label>
   </nav>
   );
@@ -27,12 +32,12 @@ class App extends Component {
     this.state = { 
       loading: true, 
       messages: [],
-      currentUser: {name: "Anonymous"},
-      colour: "#010101",
+      currentUser: {name: 'Anonymous'},
+      colour: '#010101',
       numOfUsers: 0
     }
     // websocket setup
-    const socketServerURL = "ws://localhost:3001"
+    const socketServerURL = 'ws://localhost:3001'
     this.socket = new WebSocket(socketServerURL);
 
     // bind methods
@@ -43,7 +48,7 @@ class App extends Component {
   // REQUEST (new username): client ---> server
   updateUsername(newUsername){
     const usernameBody = {
-      type: "notifyMessage",
+      type: 'notifyMessage',
       content: `${this.state.currentUser.name} changed their name to ${newUsername}`,
       currentUser: {name: newUsername}
     }
@@ -54,7 +59,7 @@ class App extends Component {
   // REQUEST (new message): client ---> server
   updateMessages(newMessage){
       const messageBody = {
-        type: "postMessage",
+        type: 'postMessage',
         content: newMessage,
         username: this.state.currentUser
       }
@@ -66,11 +71,11 @@ class App extends Component {
     // simulated delay on initial render
     setTimeout(() => {
       this.setState({loading: false})
-      }, 1000);
+      }, 1300);
 
     // websocket connection to server
     this.socket.onopen = () => {
-      console.log("Connected to Server");
+      console.log('Connected to Server');
     };
 
     // RESPONSE: client <--- server
@@ -79,7 +84,7 @@ class App extends Component {
 
       switch(serverData.type) {
 
-        case "numOfUsers":
+        case 'numOfUsers':
           this.setState({numOfUsers: serverData.totalNum});
         break;
 
