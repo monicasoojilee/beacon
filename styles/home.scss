@@ -1,20 +1,70 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
+@import url("https://fonts.googleapis.com/css?family=Bungee+Shade");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
+
+// LOADING SCREEN - icon movement animation
+@keyframes load {
+  0%   {right:0px;}
+  50%  {right:350px;}
+  100% {right:600px;}
+} 
+
+// LOADING SCREEN - text colour change animation with icon
+@keyframes colourload {
+  0% {right:0px; background: -webkit-linear-gradient(left, black, #F6BE5E);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;}
+  25% {right: 200px; background: -webkit-linear-gradient(left, black, black, #F6BE5E, black);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;}
+  50%  {right:350px; background: -webkit-linear-gradient(left, black, black, #F6BE5E, black, black);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;}
+  75% {right:450px; background: -webkit-linear-gradient(right, black,  black, #F6BE5E, black);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;}
+  100% {right:600px; background: -webkit-linear-gradient(right, black, #F6BE5E);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;}
+} 
+
 h1 {
-  color: tomato;
+  color: black;
+  font-family: "Bungee Shade", cursive;
+  animation-name: colourload;
+  animation-duration: 1.3s;
+  text-align: center;
+}
+
+.wood,
+.torch {
+  margin: 50px 100px
+}
+
+.wood {
+  position: fixed;
+}
+
+.torch {
+  float: right;
+  position: relative;
+  height: 60px;
+  width: 60px;
+  animation-name: load;
+  animation-duration: 3.2s;
 }
 
 body {
-  background: white;
+  background-color: white;;
   color: black;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  margin: 70px 0;
+  margin: 85px 5%;
 }
 
 .chatbar {
-  background: tomato;
+  background: navy;
   border-top: 1px solid black;
   bottom: 0;
   display: flex;
@@ -61,17 +111,23 @@ body {
 
 .message-content {
   flex: 8;
+  color: white;
+  max-width: 25%;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 .message-username {
   flex: 2;
+  font-family: 'Open Sans', cursive;
+  font-size: 18px;
   font-weight: 700;
 }
 
 .navbar {
-  background: tomato;
+  background: linear-gradient(to right, lightgoldenrodyellow, ivory, navy);
   border-bottom: 1px solid black;
-  height: 60px;
+  height: 75px;
   left: 0;
   padding: 0 10px;
   position: fixed;
@@ -83,16 +139,37 @@ body {
   color: inherit;
   display: block;
   float: left;
+  color: black;
+  font-family: 'Bungee Shade', cursive;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 50px;
+  letter-spacing: 5px;
   height: 60px;
   line-height: 60px;
-  padding: 0 10px;
+  padding: 0 15px;
+  margin: 5px 0;
   text-decoration: none;
+}
+
+img {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+  height: 75px;
+  width: 75px;
+  margin-left: 5px;
+  float: left;
 }
 
 label {
   float: right;
-  margin-top: 20px;
-  margin-right: 10px;
+  font-family: 'Open Sans';
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-right: 15px;
 }
