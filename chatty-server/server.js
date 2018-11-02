@@ -15,9 +15,13 @@ const server = express()
 //--------------- WEBSOCKET SERVER ---------------//
 const wss = new SocketServer({ server });
 
+const colourArr = ["#B71212", "#7B12B7", "#07729F", "#DE781E"];
+
 // ON CONNECT (+ assigned a socket(ws))
 wss.on('connection', (ws) => {
   console.log('Client connected');
+
+  let randomColour = colourArr[(Math.floor((Math.random() * 4)))];
 
   wss.clients.forEach(client => {
     let usersOnline = {
@@ -51,6 +55,7 @@ wss.on('connection', (ws) => {
         id: uuidv4(),
         username: clientData.username.name,
         content: clientData.content,
+        colour: randomColour
       }
       wss.clients.forEach(client => {
         client.send(JSON.stringify(messageWithId));

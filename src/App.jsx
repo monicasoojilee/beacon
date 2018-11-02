@@ -1,7 +1,6 @@
 // IMPORT - all components/features for the main application
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
-import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 
 // RENDER - simulated delay loading message on initial render
@@ -29,6 +28,7 @@ class App extends Component {
       loading: true, 
       messages: [],
       currentUser: {name: "Anonymous"},
+      colour: "#010101",
       numOfUsers: 0
     }
     // websocket setup
@@ -76,8 +76,9 @@ class App extends Component {
     // RESPONSE: client <--- server
     this.socket.onmessage = (event) => {
       const serverData = JSON.parse(event.data);
+
       switch(serverData.type) {
-        
+
         case "numOfUsers":
           this.setState({numOfUsers: serverData.totalNum});
         break;
@@ -95,11 +96,11 @@ class App extends Component {
         {this.state.loading ? <Loading /> :
           <div>
           <NavBar numOfUsers={this.state.numOfUsers}/>
-          <ChatBar currentUser={this.state.currentUser} 
+          <ChatBar currentUser={this.state.currentUser}
                    updateUsername={this.updateUsername}
                    updateMessages={this.updateMessages} />
-          <Message />
-          <MessageList messageList={this.state.messages}/>
+          <MessageList messageList={this.state.messages}
+                       colour={this.state.colour} />
           </div>
         }
       </div>
