@@ -5,7 +5,7 @@ Chatty ("Beacon") is a single-page, real-time communication application, initial
 As a part of the web development curriculum at Lighthouse Labs (YVR), this was an individual evaluated project built over four days.
 
 ## Final Product
-[Loading Screen and Chat Interface](https://github.com/monicasoojilee/react-boilerplate/blob/master/styles/beacon-demo.gif)
+![Loading Screen and Chat Interface](https://github.com/monicasoojilee/react-boilerplate/blob/master/styles/beacon-demo.gif)
 
 ![Multiple Users](https://github.com/monicasoojilee/react-boilerplate/blob/master/styles/multiple-convos.png)
 
